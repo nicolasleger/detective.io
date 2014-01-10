@@ -2,8 +2,19 @@
 
 	<div ng-controller="UserCtrl">
 		<div ng-show="user.is_logged" class="pull-right top10 right20">
-			Welcome, [[user.username]]!
-			<a ng-click="logout()" href="#">Sign out</a>
+			<span class="label label-xs">
+				Welcome, [[user.username]]!
+			</span>
+			<div class="btn-group left10">
+				<a ng-href="/account/dashboard" class="btn btn-xs btn-default">
+					<i class="fa fa-tachometer right05"></i>
+					Dashboard
+				</a>
+				<a ng-click="logout()" class="btn btn-xs btn-default">
+					<i class="fa fa-sign-out right05"></i>
+					Sign out
+				</a>
+			</div>
 		</div>
 	</div>
 
