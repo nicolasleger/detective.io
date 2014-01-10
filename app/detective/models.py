@@ -1,8 +1,9 @@
-from .utils                    import get_topics
-from app.detective.permissions import create_permissions
-from django.core.exceptions    import ValidationError
-from django.db                 import models
-from tinymce.models            import HTMLField
+from .utils                     import get_topics
+from app.detective.permissions  import create_permissions
+from django.contrib.auth.models import User
+from django.core.exceptions     import ValidationError
+from django.db                  import models
+from tinymce.models             import HTMLField
 import os
 import random
 import string
@@ -49,6 +50,7 @@ class Topic(models.Model):
     public      = models.BooleanField(help_text="Is your topic public?", default=True)
     ontology    = models.FileField(null=True, blank=True, upload_to="ontologies", help_text="Ontology file that descibes your field of study.")
     background  = models.ImageField(null=True, blank=True, upload_to="topics", help_text="Background image displayed on the topic's landing page.")
+    author      = models.ForeignKey(User, null=True, blank=True, help_text="The author of this topic.")
 
     def __unicode__(self):
         return self.title

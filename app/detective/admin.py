@@ -15,6 +15,11 @@ class TopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_display = ("title", "link", "public", )
 
+    def save_model(self, request, obj, form, change):
+        super(TopicAdmin, self).save_model(request, obj, form, change)
+        if obj.author is None: obj.author = request.user
+        obj.save()
+
 admin.site.register(Topic, TopicAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
