@@ -41,6 +41,22 @@
 @import "components/bootstrap/less/utilities.less";
 @import "components/bootstrap/less/responsive-utilities.less";
 
+
+html body {
+	.nav-tabs > li > a {
+		.border-radius(@panel-border-radius @panel-border-radius 0 0);
+	}
+
+	.tab-content {
+		.panel();
+		.border-radius(0 0 @panel-border-radius @panel-border-radius);
+		color:@panel-default-text;
+		a {
+			color:mix(@gray-darker, @link-color);
+		}
+	}
+}
+
 .form-control, .form-control:focus {
 	.box-shadow(none);
 	border-width:0;

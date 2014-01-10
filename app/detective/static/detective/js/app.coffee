@@ -1,5 +1,12 @@
 detective = angular
-    .module('detective', ["detectiveServices", "detectiveFilters", "ui.bootstrap", "monospaced.elastic", "ngProgressLite"])
+    .module('detective', [
+        "detectiveServices",
+        "detectiveFilters",
+        "ui.bootstrap",
+        "monospaced.elastic",
+        "ngProgressLite",
+        "draganddrop"
+    ])
     .run(
         [
             '$rootScope',
@@ -41,6 +48,11 @@ detective = angular
                     .when('/account/reset-password-confirm', {
                         controller: UserCtrl
                         templateUrl: "/partial/reset-password-confirm.html"
+                    })
+                    .when('/dashboard', {
+                        controller: DashboardCtrl
+                        templateUrl: "/partial/dashboard.html"
+                        auth: true
                     })
                     .when('/404', {
                         controller: NotFoundCtrl

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from .models                  import *
+from .user                    import UserResource
 from app.detective.models     import QuoteRequest, Topic, Article
 from app.detective.utils      import get_registered_models
 from tastypie                 import fields
@@ -30,9 +31,10 @@ class QuoteRequestResource(ModelResource):
 
 class TopicResource(ModelResource):
 
+    author = fields.ToOneField(UserResource, 'author', full=True, use_in='detail')
     class Meta:
         queryset = Topic.objects.all()
-        filtering = {'slug': ALL, 'module': ALL, 'public': ALL, 'title': ALL}
+        filtering = {'slug': ALL, 'module': ALL, 'public': ALL, 'title': ALL, 'author': ALL_WITH_RELATIONS}
 
     def dehydrate(self, bundle):
         # Get all registered models

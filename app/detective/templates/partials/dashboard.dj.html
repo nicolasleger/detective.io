@@ -1,0 +1,79 @@
+<div class="container" id="dashboard">
+  <h2 class="bottom0">
+    <i class="fa fa-tachometer right05"></i>
+    Dashboard
+  </h2>
+  <p class="lead text-muted bottom40">
+    Create, edit and manage your investigations here.
+  </p>
+
+  <tabset>
+
+    <tab heading="Create a new investigation">
+      <div class="margin20">
+        <p>Drag and drop the classes to the network bellow.</p>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="well">
+              <ul class="list-unstyled">
+                <li class="bottom10" ng-repeat="model in ['Person', 'Organization', 'Event']">
+                  <span class="btn btn-block btn-default"
+                        draggable="true"
+                        draggable-type="adding"
+                        draggable-data="model">
+                    [[model]]
+                  </span>
+                </li>
+              </ul>
+              <div class="text-center text-muted bottom10">
+                &bullet; &bullet; &bullet;
+              </div>
+              <span class="btn btn-block btn-primary">
+                Create a new type
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="well ontology"
+                 drop="dropModel($data, $event)"
+                 drop-effect="copy"
+                 drop-accept="'json/adding'">
+              <ontology ng-model="selectedModels">
+                <ul class="list-unstyled">
+                  <li ng-repeat="m in selectedModels">
+                    <span class="btn btn-default"
+                          data-id="[[m.name]]"
+                          ng-style="{top: m.top, left: m.left}">
+                      [[m.name]]
+                    </span>
+                  </li>
+                </ul>
+              </ontology>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+
+
+    <tab heading="My investigations">
+      <div class="margin20">
+        <table class="table top20">
+          <tr ng-repeat="topic in userTopics.objects">
+            <td>
+              <a class="lead" ng-href="/[[topic.slug]]">[[topic.title]]</a>
+              <div class="text-muted" ng-bind-html-unsafe="topic.description"></div>
+            </td>
+            <td class="text-right">
+              <a>
+                <i class="fa fa-edit fa-2x"></i>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </tab>
+
+
+  </tabset>
+</div>

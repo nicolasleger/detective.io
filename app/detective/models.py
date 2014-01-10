@@ -108,7 +108,10 @@ class Topic(models.Model):
         directory     = os.path.dirname(os.path.realpath( module.__file__ ))
         # Path to the ontology file
         ontology = "%s/ontology.owl" % directory
-        return os.path.exists(ontology)
+        if os.path.exists(ontology): return True
+        # At last, checks that a model file exists
+        models = "%s/models.py" % directory
+        return os.path.exists(models)
 
 
     def get_absolute_path(self):
