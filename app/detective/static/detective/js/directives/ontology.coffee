@@ -4,12 +4,16 @@ angular.module("detective").directive "ontology", ["$timeout", ($timeout)->
         plumb = jsPlumb.getInstance
             Connector    : [ "Bezier", curviness: 10 ]
             Endpoint     : [ "Dot", radius: 5 ]
-            EndpointStyle: fillStyle: "#aaa"
+            EndpointStyle:
+                fillStyle   : "#fff"
+                strokeStyle : "#cccccc"
+                strokeWidth : 1
             Anchor       : "AutoDefault"
             PaintStyle   :
                 lineWidth   : 2
-                strokeStyle : "#aaa"
-                outlineWidth: 0
+                fillStyle   : "#fff"
+                strokeStyle : "#cccccc"
+                strokeWidth : 1
         # Watch the given object
         scope.$watch attrs.ngModel, ->
             # Add a short delay to be sure that the elments are rendered
