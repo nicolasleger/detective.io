@@ -28,6 +28,13 @@
 				</span>
 			</div>
 
+			<div ng-show="false && hasRels()">
+				<h3>Network</h3>
+				<div class="well padding10">
+					<graphviz data="graphnodes" topic="topic"></graphviz>
+				</div>
+			</div>
+
 			<div ng-show="hasRels()">
 				<h3>Jump to...</h3>
 				<div class="well padding10">

@@ -1,8 +1,8 @@
 @staticPath: "../";
 
-@import-once './tools.less';
-@import-once './animations.less';
-@import-once './bootstrap-overload.less';
+@import './tools.less';
+@import './animations.less';
+@import './bootstrap-overload.less';
 @import '//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css';
 
 @zindex-context   : 10;
@@ -264,8 +264,7 @@ header {
 			position:absolute;
 			min-height:100%;
 			height:auto;
-			min-width: 100%;
-			max-width: auto;
+			width: 100%;
 			z-index:5;
 		}
 
@@ -472,6 +471,12 @@ header {
 		 	color: @panel-success-text;
 			background: @panel-success-heading-bg;
 			border-color: darken(@panel-success-border, 5);
+		}
+
+		.failed .form-footer {
+		 	color: @panel-warning-text;
+			background: @panel-warning-heading-bg;
+			border-color: darken(@panel-warning-border, 5);
 		}
 	}
 
@@ -829,4 +834,47 @@ footer {
 	.legals {
 		padding:10px;
 	}
+}
+
+/*
+** GraphViz
+*/
+
+.graphviz {
+	input[type='range'] {
+		background: none;
+		border: none;
+		outline: none;
+	}
+}
+
+svg {
+	.node {
+		stroke: @brand-secondary;
+		stroke-width: 1.5px;
+		cursor: pointer;
+		fill: lighten(@body-bg, 20%);
+	}
+
+	.link {
+		fill: none;
+		stroke-width: 1.5px;
+		stroke: lighten(@body-bg, 20%);
+	}
+
+	.name {
+		font: 10px sans-serif;
+		pointer-events: none;
+		text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+	}
+}
+
+.tooltip {
+	.border-radius(5px);
+	padding: 7px;
+	position: absolute;
+	opacity: 0;
+	background: darken(@brand-primary, 10%);
+	color: #000;
+	pointer-events: none;
 }

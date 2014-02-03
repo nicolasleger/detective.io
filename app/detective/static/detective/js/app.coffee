@@ -5,6 +5,7 @@ detective = angular
         "ui.bootstrap",
         "monospaced.elastic",
         "ngProgressLite",
+        "angularFileUpload",
         "draganddrop"
     ])
     .run(
@@ -66,10 +67,6 @@ detective = angular
                         controller: UserCtrl
                         templateUrl: "/partial/signup.html"
                     })
-                    .when('/search', {
-                        controller: IndividualSearchCtrl
-                        templateUrl: "/partial/individual-list.html"
-                    })
                     .when('/contact-us', {
                         controller: ContactUsCtrl
                         templateUrl: "/partial/contact-us.html"
@@ -85,6 +82,10 @@ detective = angular
                     .when('/account', redirectTo: '/')
                     .when('/common/contribute', redirectTo: '/')
                     .when('/:topic/p/', redirectTo: '/:topic/')
+                    .when('/:topic/search', {
+                        controller: IndividualSearchCtrl
+                        templateUrl: "/partial/individual-list.html"
+                    })
                     .when('/:topic/p/:slug',
                         controller: ArticleCtrl
                         templateUrl: "/partial/article.html"
@@ -93,6 +94,10 @@ detective = angular
                         controller: ContributeCtrl
                         templateUrl: "/partial/contribute.html"
                         auth: true
+                    })
+                    .when('/:topic/contribute/upload', {
+                        controller: BulkUploadCtrl
+                        templateUrl: "/partial/bulk-upload.html"
                     })
                     .when('/:topic', {
                         controller: ExploreCtrl
@@ -107,6 +112,11 @@ detective = angular
                     .when('/:topic/:type/:id', {
                         controller: IndividualSingleCtrl
                         templateUrl: "/partial/individual-single.html"
+                        reloadOnSearch: false
+                    })
+                    .when('/:topic/:type/:id/graph', {
+                        controller: IndividualGraphCtrl
+                        templateUrl: "/partial/individual-graph.html"
                         reloadOnSearch: false
                     })
                     .otherwise redirectTo: '/404'

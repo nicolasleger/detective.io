@@ -55,6 +55,10 @@ html body {
 			color:mix(@gray-darker, @link-color);
 		}
 	}
+
+	h4, h5, h6 {
+		font-family: inherit;
+	}
 }
 
 .form-control, .form-control:focus {
@@ -84,8 +88,10 @@ html body {
 	}
 }
 
-.alert {
-	padding:15px;
+html .alert {
+	padding:15px 20px;
+	border-width:0px;
+	border-left-width:4px;
 }
 
 html body .panel {

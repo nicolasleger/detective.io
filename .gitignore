@@ -23,12 +23,15 @@ app/media/*
 
 # Virtualenv
 venv
-.env
 
 # Generated files
 app/static/CACHE
 app/static/components
 staticfiles
-lib
+lib/neo4j*
 node_modules
 catalog-v001.xml
+.coverage
+
+# Configuration file
+.env_dev

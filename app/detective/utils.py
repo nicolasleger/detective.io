@@ -5,6 +5,7 @@ from os.path                  import isdir, join
 import importlib
 import inspect
 import re
+import tempfile
 
 def create_node_model(name, fields=None, app_label='', module='', options=None):
     """
@@ -67,12 +68,22 @@ def get_topics_modules():
     return CUSTOM_APPS
 
 def get_topic_models(topic):
+    import warnings
+    warnings.warn("deprecated, you should use the get_models() method from the Topic model.", DeprecationWarning)
     from django.db.models import Model
+    from app.detective.models import Topic
     # Models to collect
     models        = []
     models_path   = "app.detective.topics.%s.models" % topic
     try:
-        models_module = importlib.import_module(models_path)
+        if isinstance(topic, Topic):
+            models_module = topic.get_models()
+        elif hasattr(topic, '__str__'):
+            # Models to collect
+            models_path   = "app.detective.topics.%s.models" % topic
+            models_module = importlib.import_module(models_path)
+        else:
+            return []
         for i in dir(models_module):
             cls = getattr(models_module, i)
             # Collect every Django's model subclass
@@ -136,9 +147,11 @@ def get_model_fields(model):
                 field = {
                     'name'         : f.name,
                     'type'         : f.get_internal_type(),
+                    'rel_type'     : getattr(f, "rel_type", ""),
                     'help_text'    : getattr(f, "help_text", ""),
                     'verbose_name' : getattr(f, "verbose_name", pretty_name(f.name)),
                     'related_model': related_model,
+                    'model'        : model.__name__,
                     'rules'        : fieldRules.all()
                 }
 
@@ -215,3 +228,35 @@ def to_underscores(value=""):
 
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+def uploaded_to_tempfile(uploaded_file):
+    # reset uploaded file's cusor
+    cursor_pos = uploaded_file.tell()
+    uploaded_file.seek(0)
+    # create a new tempfile
+    temporary = tempfile.TemporaryFile()
+    # write the uploaded content
+    temporary.write(uploaded_file.read())
+    # reset cusors
+    temporary.seek(0)
+    uploaded_file.seek(cursor_pos)
+
+    return temporary
+
+def open_csv(csv_file):
+    """
+    Return a csv reader for the reading the given file.
+    Deduce the format of the csv file.
+    """
+    import csv
+    if hasattr(csv_file, 'read'):
+        sample = csv_file.read(1024)
+        csv_file.seek(0)
+    elif type(csv_file) in (tuple, list):
+        sample = "\n".join(csv_file[:5])
+    dialect = csv.Sniffer().sniff(sample)
+    dialect.doublequote = True
+    reader = csv.reader(csv_file, dialect)
+    return reader
+
+# EOF
